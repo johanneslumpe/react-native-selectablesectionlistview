@@ -60,7 +60,7 @@ class SelectableSectionsListView extends Component {
         numcells += this.props.data[keys[i]].length;
       }
 
-      sectionHeaderHeight = section * sectionHeaderHeight;
+      sectionHeaderHeight = index * sectionHeaderHeight;
       var y = numcells * cellHeight + sectionHeaderHeight;
       this.refs.listview.refs.listviewscroll.scrollTo(y, 0);
 

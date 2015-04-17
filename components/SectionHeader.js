@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var {Component, PropTypes, View, Text} = React;
+var {Component, PropTypes, StyleSheet, View, Text} = React;
 
 class SectionHeader extends Component {
 
@@ -13,15 +13,24 @@ class SectionHeader extends Component {
     var SectionComponent = this.props.component;
     var content = SectionComponent ?
       <SectionComponent {...this.props} /> :
-      <Text>{this.props.title}</Text>;
+      <Text style={styles.text}>{this.props.title}</Text>;
 
     return (
-      <View ref="view">
+      <View ref="view" style={styles.container}>
         {content}
       </View>
     );
   }
 }
+
+var styles = StyleSheet.create({
+  container: {
+    backgroundColor:'#fff'
+  },
+  text: {
+    fontWeight: '700'
+  }
+});
 
 SectionHeader.propTypes = {
 
