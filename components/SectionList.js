@@ -2,6 +2,9 @@
 
 var React = require('react-native');
 var {Component, PropTypes, TouchableOpacity, StyleSheet, View, Text} = React;
+var UIManager = require('NativeModules').UIManager;
+
+var noop = () => {};
 
 class SectionList extends Component {
 
@@ -9,10 +12,15 @@ class SectionList extends Component {
     super(props, context);
 
     this.onSectionSelect = this.onSectionSelect.bind(this);
+    this.lastSelectedIndex = null;
   }
 
-  onSectionSelect(sectionId) {
+  onSectionSelect(sectionId, fromTouch) {
     this.props.onPress && this.props.onPress(sectionId);
+
+    if (!fromTouch) {
+      this.lastSelectedIndex = null;
+    }
   }
 
   render() {
@@ -37,7 +45,19 @@ class SectionList extends Component {
     });
 
     return (
-      <View style={[styles.container, this.props.style]}>
+      <View style={[styles.container, this.props.style]} onMoveShouldSetResponder={(e) => {
+          var ev = e.nativeEvent;
+          var rect = {width:1, height:1, x: ev.locationX, y: ev.locationY};
+          UIManager.measureViewsInRect(rect, e.target, noop, (frames) => {
+            if (frames.length) {
+              var index = frames[0].index;
+              if (this.lastSelectedIndex !== index) {
+                this.lastSelectedIndex = index;
+                this.onSectionSelect(this.props.sections[index], true);
+              }
+            }
+          });
+        }} >
         {sections}
       </View>
     );
