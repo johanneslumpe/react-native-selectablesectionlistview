@@ -18,7 +18,7 @@ var SelectableSectionsListView = require('react-native-selectablesectionlistview
   data={yourData}
   cell={YourCellComponent}
   cellHeight={100}
-  sectionHeaderHeight={20}
+  sectionHeaderHeight={22.5}
 />
 ```
 
