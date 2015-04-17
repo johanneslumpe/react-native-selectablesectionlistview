@@ -39,6 +39,37 @@ class SelectableSectionsListView extends Component {
     this.updateTagInSectionMap = this.updateTagInSectionMap.bind(this);
   }
 
+  componentDidMount() {
+    // push measuring into the next tick
+    setTimeout(() => {
+      UIManager.measure(this.refs.view.getNodeHandle(), (x,y,w,h) => {
+        this.containerHeight = h;
+      });
+    }, 0);
+
+    // only if we have an object, the sidebar will show
+    // without it we don't need to know the total height
+    if (!Array.isArray(this.props.data)) {
+      this.calculateTotalHeight();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.data !== this.props.data) {
+      this.calculateTotalHeight(nextProps.data);
+    }
+  }
+
+  calculateTotalHeight(data) {
+    data = data || this.props.data;
+    this.totalHeight = Object.keys(data)
+      .reduce((carry, key) => {
+        carry += data[key].length * this.props.cellHeight;
+        carry += this.props.sectionHeaderHeight;
+        return carry;
+      }, 0);
+  }
+
   updateTagInSectionMap(tag, section) {
     this.sectionTagMap[section] = tag;
   }
@@ -48,7 +79,6 @@ class SelectableSectionsListView extends Component {
   }
 
   scrollToSection(section) {
-
     if (!this.props.useDynamicHeights) {
       var cellHeight = this.props.cellHeight;
       var sectionHeaderHeight = this.props.sectionHeaderHeight;
@@ -62,8 +92,10 @@ class SelectableSectionsListView extends Component {
 
       sectionHeaderHeight = index * sectionHeaderHeight;
       var y = numcells * cellHeight + sectionHeaderHeight;
-      this.refs.listview.refs.listviewscroll.scrollTo(y, 0);
+      var maxY = this.totalHeight-this.containerHeight;
+      y = y > maxY ? maxY : y;
 
+      this.refs.listview.refs.listviewscroll.scrollTo(y, 0);
     } else {
       // this breaks, if not all of the listview is pre-rendered!
       UIManager.measure(this.cellTagMap[section], (x,y,w,h) => {
@@ -176,7 +208,7 @@ class SelectableSectionsListView extends Component {
     props.style = void 0;
 
     return (
-      <View style={[styles.container, this.props.style]}>
+      <View ref="view" style={[styles.container, this.props.style]}>
         <ListView
           ref="listview"
           {...props}
