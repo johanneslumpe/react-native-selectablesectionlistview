@@ -6,6 +6,8 @@ Please file issues for missing features or bugs.
 
 I apologize for the bad name.
 
+![How it looks](http://lum.pe/sectionlistview.gif)
+
 ## Usage
 
 The most basic way to use this component is as follows:
