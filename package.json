@@ -13,9 +13,9 @@
   "author": "Johannes Lumpe <johannes@lum.pe> (https://github.com/johanneslumpe)",
   "license": "MIT",
   "devDependencies": {
-    "react-native": "^0.3.*"
+    "react-native": ">=0.3.4 <0.5.0"
   },
   "peerDependencies": {
-    "react-native": "^0.3.*"
+    "react-native": ">=0.3.4 <0.5.0"
   }
 }
