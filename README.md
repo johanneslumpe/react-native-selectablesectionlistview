@@ -11,6 +11,9 @@ I apologize for the bad name.
 The most basic way to use this component is as follows:
 
 ```javascript
+var SelectableSectionsListView = require('react-native-selectablesectionlistview');
+
+// inside your render function
 <SelectableSectionsListView
   data={yourData}
   cell={YourCellComponent}
