@@ -67,7 +67,7 @@ The height of the section header component
 The height of the cell component
 
 ### useDynamicHeights
-Whether to determine the y postion to scroll to by calculating header and cell heights or by using the UIManager to measure the position of the destination element. **This is an exterimental feature**
+Whether to determine the y postion to scroll to by calculating header and cell heights or by using the UIManager to measure the position of the destination element. **This is an experimental feature**
 
 ### updateScrollState
 Whether to set the current y offset as state and pass it to each cell during re-rendering
