@@ -1,6 +1,6 @@
 {
   "name": "react-native-selectablesectionlistview",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "A Listview with a sidebar to jump to sections directly",
   "main": "index.js",
   "scripts": {
@@ -12,6 +12,11 @@
   },
   "author": "Johannes Lumpe <johannes@lum.pe> (https://github.com/johanneslumpe)",
   "license": "MIT",
+  "keywords": [
+    "react-component",
+    "react-native",
+    "ios"
+  ],
   "devDependencies": {
     "react-native": ">=0.3.4 <0.5.0"
   },
