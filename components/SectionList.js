@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var {Component, PropTypes, TouchableOpacity, StyleSheet, View, Text} = React;
+var {Component, PropTypes, StyleSheet, View, Text} = React;
 var UIManager = require('NativeModules').UIManager;
 
 var noop = () => {};
@@ -28,6 +28,7 @@ class SectionList extends Component {
   detectAndScrollToSection(e) {
     var ev = e.nativeEvent;
     var rect = {width:1, height:1, x: ev.locationX, y: ev.locationY};
+
     UIManager.measureViewsInRect(rect, e.target, noop, (frames) => {
       if (frames.length) {
         var index = frames[0].index;
@@ -46,24 +47,31 @@ class SectionList extends Component {
         this.props.getSectionListTitle(section) :
         section;
 
-      return SectionComponent ?
+      var child = SectionComponent ?
         <SectionComponent
-          key={index}
           sectionId={section}
           title={title}
           onPress={this.onSectionSelect}
         /> :
-        <TouchableOpacity
-          key={index}
-          onPress={() => this.onSectionSelect(section)}>
-          <View style={styles.item}><Text style={styles.text}>{title}</Text></View>
-        </TouchableOpacity>;
+        <View
+          style={styles.item}>
+          <Text style={styles.text}>{title}</Text>
+        </View>;
+
+      return (
+        <View key={index} pointerEvents="none">
+          {child}
+        </View>
+      );
     });
 
     return (
       <View style={[styles.container, this.props.style]}
+        onStartShouldSetResponder={returnTrue}
         onMoveShouldSetResponder={returnTrue}
-        onResponderMove={this.detectAndScrollToSection}>
+        onResponderGrant={this.detectAndScrollToSection}
+        onResponderMove={this.detectAndScrollToSection}
+      >
         {sections}
       </View>
     );
