@@ -5,6 +5,7 @@ var {Component, PropTypes, TouchableOpacity, StyleSheet, View, Text} = React;
 var UIManager = require('NativeModules').UIManager;
 
 var noop = () => {};
+var returnTrue = () => true;
 
 class SectionList extends Component {
 
@@ -12,6 +13,7 @@ class SectionList extends Component {
     super(props, context);
 
     this.onSectionSelect = this.onSectionSelect.bind(this);
+    this.detectAndScrollToSection = this.detectAndScrollToSection.bind(this);
     this.lastSelectedIndex = null;
   }
 
@@ -21,6 +23,20 @@ class SectionList extends Component {
     if (!fromTouch) {
       this.lastSelectedIndex = null;
     }
+  }
+
+  detectAndScrollToSection(e) {
+    var ev = e.nativeEvent;
+    var rect = {width:1, height:1, x: ev.locationX, y: ev.locationY};
+    UIManager.measureViewsInRect(rect, e.target, noop, (frames) => {
+      if (frames.length) {
+        var index = frames[0].index;
+        if (this.lastSelectedIndex !== index) {
+          this.lastSelectedIndex = index;
+          this.onSectionSelect(this.props.sections[index], true);
+        }
+      }
+    });
   }
 
   render() {
@@ -45,19 +61,9 @@ class SectionList extends Component {
     });
 
     return (
-      <View style={[styles.container, this.props.style]} onMoveShouldSetResponder={(e) => {
-          var ev = e.nativeEvent;
-          var rect = {width:1, height:1, x: ev.locationX, y: ev.locationY};
-          UIManager.measureViewsInRect(rect, e.target, noop, (frames) => {
-            if (frames.length) {
-              var index = frames[0].index;
-              if (this.lastSelectedIndex !== index) {
-                this.lastSelectedIndex = index;
-                this.onSectionSelect(this.props.sections[index], true);
-              }
-            }
-          });
-        }} >
+      <View style={[styles.container, this.props.style]}
+        onMoveShouldSetResponder={returnTrue}
+        onResponderMove={this.detectAndScrollToSection}>
         {sections}
       </View>
     );
