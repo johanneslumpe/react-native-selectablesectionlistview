@@ -56,7 +56,6 @@ class SectionList extends Component {
         <SectionComponent
           sectionId={section}
           title={title}
-          onPress={this.onSectionSelect}
         /> :
         <View
           style={styles.item}>
