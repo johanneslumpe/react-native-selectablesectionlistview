@@ -79,7 +79,6 @@ class SelectableSectionsListView extends Component {
       }, 0);
   }
 
-
   updateTagInSectionMap(tag, section) {
     this.sectionTagMap[section] = tag;
   }
