@@ -24,6 +24,7 @@ class SelectableSectionsListView extends Component {
     };
 
     this.renderFooter = this.renderFooter.bind(this);
+    this.renderHeader = this.renderHeader.bind(this);
     this.renderRow = this.renderRow.bind(this);
     this.renderSectionHeader = this.renderSectionHeader.bind(this);
 
@@ -79,6 +80,9 @@ class SelectableSectionsListView extends Component {
   }
 
   scrollToSection(section) {
+    var y = 0;
+    y += this.props.headerHeight || 0;
+
     if (!this.props.useDynamicHeights) {
       var cellHeight = this.props.cellHeight;
       var sectionHeaderHeight = this.props.sectionHeaderHeight;
@@ -91,15 +95,15 @@ class SelectableSectionsListView extends Component {
       }
 
       sectionHeaderHeight = index * sectionHeaderHeight;
-      var y = numcells * cellHeight + sectionHeaderHeight;
-      var maxY = this.totalHeight-this.containerHeight;
+      y += numcells * cellHeight + sectionHeaderHeight;
+      var maxY = this.totalHeight - this.containerHeight;
       y = y > maxY ? maxY : y;
 
       this.refs.listview.refs.listviewscroll.scrollTo(y, 0);
     } else {
       // this breaks, if not all of the listview is pre-rendered!
-      UIManager.measure(this.cellTagMap[section], (x,y,w,h) => {
-        y = y-this.props.sectionHeaderHeight;
+      UIManager.measure(this.cellTagMap[section], (x, y, w, h) => {
+        y = y - this.props.sectionHeaderHeight;
         this.refs.listview.refs.listviewscroll.scrollTo(y, 0);
       });
     }
@@ -129,9 +133,12 @@ class SelectableSectionsListView extends Component {
 
   renderFooter() {
     var Footer = this.props.footer;
-    return Footer ?
-      <Footer /> :
-      <View />;
+    return <Footer />;
+  }
+
+  renderHeader() {
+    var Header = this.props.header;
+    return <Header />;
   }
 
   renderRow(item, sectionId, index) {
@@ -196,11 +203,20 @@ class SelectableSectionsListView extends Component {
       dataSource = this.state.dataSource.cloneWithRowsAndSections(data);
     }
 
+    var renderFooter = this.props.footer ?
+      this.renderFooter :
+      this.props.renderFooter;
+
+    var renderHeader = this.props.header ?
+      this.renderHeader :
+      this.props.renderHeader;
+
     var props = merge(this.props, {
       onScroll: this.onScroll,
       onScrollAnimationEnd: this.onScrollAnimationEnd,
       dataSource,
-      renderFooter: this.renderFooter,
+      renderFooter,
+      renderHeader,
       renderRow: this.renderRow,
       renderSectionHeader
     });
@@ -280,6 +296,27 @@ SelectableSectionsListView.propTypes = {
    * A custom element to render as footer
    */
   footer: PropTypes.func,
+
+  /**
+   * A custom element to render as header
+   */
+  header: PropTypes.func,
+
+  /**
+   * The height of the header element to render. Is required if a
+   * header element is used, so the positions can be calculated correctly
+   */
+  headerHeight: PropTypes.number,
+
+  /**
+   * A custom function to render as footer
+   */
+  renderHeader: PropTypes.func,
+
+  /**
+   * A custom function to render as header
+   */
+  renderFooter: PropTypes.func,
 
   /**
    * An object containing additional props, which will be passed
