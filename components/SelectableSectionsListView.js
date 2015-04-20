@@ -206,7 +206,7 @@ class SelectableSectionsListView extends Component {
       sectionList = !this.props.hideSectionList ?
         <SectionList
           style={this.props.sectionListStyle}
-          onPress={this.scrollToSection}
+          onSectionSelect={this.scrollToSection}
           sections={Object.keys(data)}
           getSectionListTitle={this.props.getSectionListTitle}
           component={this.props.sectionListItem}

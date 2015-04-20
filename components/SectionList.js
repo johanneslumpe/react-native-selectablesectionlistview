@@ -19,7 +19,7 @@ class SectionList extends Component {
   }
 
   onSectionSelect(sectionId, fromTouch) {
-    this.props.onPress && this.props.onPress(sectionId);
+    this.props.onSectionSelect && this.props.onSectionSelect(sectionId);
 
     if (!fromTouch) {
       this.lastSelectedIndex = null;
@@ -96,9 +96,9 @@ SectionList.propTypes = {
   getSectionListTitle: PropTypes.func,
 
   /**
-   * Function to be called upon pressing a sction list item
+   * Function to be called upon selecting a section list item
    */
-  onPress: PropTypes.func,
+  onSectionSelect: PropTypes.func,
 
   /**
    * The sections to render
