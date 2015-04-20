@@ -1,6 +1,6 @@
 {
   "name": "react-native-selectablesectionlistview",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "A Listview with a sidebar to jump to sections directly",
   "main": "index.js",
   "scripts": {
