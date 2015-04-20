@@ -28,84 +28,152 @@ You can find a more complete example below
 
 ## Props
 
+### SelectableSectionsListView
+
 All props are passed through to the underlying `ListView`, so you can specify all the available props for `ListView` normally - except the following, which are defined internally and will be overwritten:
 
 * `onScroll`
 * `onScrollAnimationEnd`
 * `dataSource`
-* `renderFooter`
 * `renderRow`
 * `renderSectionHeader`
 
-### data
+#### data
 `array|object`, **required**  
 The data to render in the listview
 
-### hideSectionList
+#### hideSectionList
 `boolean`  
 Whether to show the section listing or not. *Note: If the data your are providing to
 the component is an array, the section list will automatically be hidden.*
 
-### getSectionTitle
+#### getSectionTitle
 `function`  
 Function to provide titles for the section headers
 
-### getSectionListTitle
+#### getSectionListTitle
 `function`  
 Function to provide titles for the section list items
 
-### onCellSelect
+#### onCellSelect
 `function`  
 Callback which should be called when a cell has been selected
 
-### onScrollToSection
+#### onScrollToSection
 `function`  
 Callback which should be called when the user scrolls to a section
 
-### cell
+#### cell
 `function` **required**  
 The cell component to render for each row
 
-### sectionListItem
+#### sectionListItem
 `function`  
 A custom component to render for each section list item
 
-### sectionHeader
+#### sectionHeader
 `function`  
 A custom component to render for each section header
 
-### footer
+#### footer
 `function`  
-A custom component to render as footer
+A custom component to render as footer  
+**This props takes precedence over `renderFooter`**
 
-### cellProps
+#### renderFooter
+`function`  
+A custom function which has to return a valid React element, which will be
+used as footer.
+
+#### header
+`function`  
+A custom component to render as header  
+**This props takes precedence over `renderHeader`**
+
+#### renderHeader
+`function`  
+A custom function which has to return a valid React element, which will be used as header.
+
+#### headerHeight
+`number`  
+The height of the rendered header element.  
+**Is required if a header element is used, so the positions can be calculated correctly**
+
+#### cellProps
 `object`  
 An object containing additional props, which will be passed to each cell component
 
-### sectionHeaderHeight
+#### sectionHeaderHeight
 `number` **required**  
 The height of the section header component
 
-### cellHeight
+#### cellHeight
 `number` **required**  
 The height of the cell component
 
-### useDynamicHeights
+#### useDynamicHeights
 `boolean`  
-Whether to determine the y postion to scroll to by calculating header and cell heights or by using the UIManager to measure the position of the destination element.  
-**This is an experimental feature**
+Whether to determine the y position to scroll to by calculating header and cell heights or by using the UIManager to measure the position of the destination element. Defaults to `false`  
+**This is an experimental feature. For it to work properly you will most likely have to experiment with different values for `scrollRenderAheadDistance`, depending on the size of your data set.**
 
-### updateScrollState
+#### updateScrollState
 `boolean`  
 Whether to set the current y offset as state and pass it to each cell during re-rendering
 
-### style
+#### style
 `object|number`  
 Styles to pass to the container
 
-### sectionListStyle
+#### sectionListStyle
 `object|number`  
 Styles to pass to the section list container
+
+---
+### Cell component
+
+These props are automatically passed to your component. In addition to these, your cell will receive all props which you specified in the object you passed as `cellProps` prop to the listview.
+
+#### index
+`number`  
+The index of the cell inside the current section
+
+#### sectionId
+`string`  
+The id of the parent section
+
+#### isFirst
+`boolean`  
+Whether the cell is the first in the section
+
+#### isLast
+`boolean`  
+Whether the cell is the last in the section
+
+#### item
+`mixed`  
+The item to render
+
+#### offsetY
+`number`  
+The current y offset of the list view  
+**If you do not specify `updateScrollState={true}` for the list component, this props will always be 0**
+
+#### onSelect
+`function`  
+The function which should be called when a cell is being selected
+
+---
+### Section list item component
+
+These props are automatically passed to your component
+
+#### sectionId
+`string`  
+The id of the parent section
+
+#### title
+`string`  
+The title for this section. Either the return value of `getSectionListTitle` or the same value as `sectionId`
 
 ## Example
 
@@ -153,7 +221,7 @@ class MyComponent extends Component {
 
   constructor(props, context) {
     super(props, context);
-    
+
     this.state = {
       data: {
         A: ['some','entries','are here'],
