@@ -13,6 +13,7 @@ class SectionList extends Component {
     super(props, context);
 
     this.onSectionSelect = this.onSectionSelect.bind(this);
+    this.resetSection = this.resetSection.bind(this);
     this.detectAndScrollToSection = this.detectAndScrollToSection.bind(this);
     this.lastSelectedIndex = null;
   }
@@ -23,6 +24,10 @@ class SectionList extends Component {
     if (!fromTouch) {
       this.lastSelectedIndex = null;
     }
+  }
+
+  resetSection() {
+    this.lastSelectedIndex = null;
   }
 
   detectAndScrollToSection(e) {
@@ -71,6 +76,7 @@ class SectionList extends Component {
         onMoveShouldSetResponder={returnTrue}
         onResponderGrant={this.detectAndScrollToSection}
         onResponderMove={this.detectAndScrollToSection}
+        onResponderRelease={this.resetSection}
       >
         {sections}
       </View>
