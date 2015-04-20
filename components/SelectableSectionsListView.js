@@ -40,6 +40,10 @@ class SelectableSectionsListView extends Component {
     this.updateTagInSectionMap = this.updateTagInSectionMap.bind(this);
   }
 
+  componentWillMount() {
+    this.calculateTotalHeight();
+  }
+
   componentDidMount() {
     // push measuring into the next tick
     setTimeout(() => {
@@ -47,29 +51,34 @@ class SelectableSectionsListView extends Component {
         this.containerHeight = h;
       });
     }, 0);
-
-    // only if we have an object, the sidebar will show
-    // without it we don't need to know the total height
-    if (!Array.isArray(this.props.data)) {
-      this.calculateTotalHeight();
-    }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.data !== this.props.data) {
+    if (nextProps.data && nextProps.data !== this.props.data) {
       this.calculateTotalHeight(nextProps.data);
     }
   }
 
   calculateTotalHeight(data) {
     data = data || this.props.data;
+
+    if (Array.isArray(data)) {
+      return;
+    }
+
+    this.sectionItemCount = {};
     this.totalHeight = Object.keys(data)
       .reduce((carry, key) => {
-        carry += data[key].length * this.props.cellHeight;
+        var itemCount = data[key].length;
+        carry += itemCount * this.props.cellHeight;
         carry += this.props.sectionHeaderHeight;
+
+        this.sectionItemCount[key] = itemCount;
+
         return carry;
       }, 0);
   }
+
 
   updateTagInSectionMap(tag, section) {
     this.sectionTagMap[section] = tag;
@@ -81,7 +90,8 @@ class SelectableSectionsListView extends Component {
 
   scrollToSection(section) {
     var y = 0;
-    y += this.props.headerHeight || 0;
+    var headerHeight = this.props.headerHeight || 0;
+    y += headerHeight;
 
     if (!this.props.useDynamicHeights) {
       var cellHeight = this.props.cellHeight;
@@ -96,7 +106,7 @@ class SelectableSectionsListView extends Component {
 
       sectionHeaderHeight = index * sectionHeaderHeight;
       y += numcells * cellHeight + sectionHeaderHeight;
-      var maxY = this.totalHeight - this.containerHeight;
+      var maxY = this.totalHeight - this.containerHeight + headerHeight;
       y = y > maxY ? maxY : y;
 
       this.refs.listview.refs.listviewscroll.scrollTo(y, 0);
@@ -145,7 +155,12 @@ class SelectableSectionsListView extends Component {
     var CellComponent = this.props.cell;
     index = parseInt(index, 10);
 
+    var isFirst = index === 0;
+    var isLast = this.sectionItemCount[sectionId]-1 === index;
+
     var props = {
+      isFirst,
+      isLast,
       sectionId,
       index,
       item,
