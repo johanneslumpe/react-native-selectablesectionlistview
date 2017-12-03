@@ -1,0 +1,90 @@
+{
+  "name": "johanneslumpe/react-native-selectablesectionlistview",
+  "version": "0.1.4",
+  "libraries": {
+    "xv": "^1.1.25"
+  },
+  "title": "",
+  "branch": "",
+  "style": {
+    "name": "Material",
+    "componentSet": {
+      "nav": "nav/DarkAbsoluteNav",
+      "header": "header/GradientHeader",
+      "article": "article/BasicArticle",
+      "footer": "footer/BasicFooter"
+    },
+    "fontFamily": "Roboto, sans-serif",
+    "heading": {
+      "fontWeight": 500,
+      "letterSpacing": "-0.01em"
+    },
+    "colors": {
+      "text": "#212121",
+      "background": "#fff",
+      "primary": "#2196f3",
+      "secondary": "#1565c0",
+      "highlight": "#ff4081",
+      "border": "#e0e0e0",
+      "muted": "#f5f5f5"
+    },
+    "layout": {
+      "centered": true,
+      "bannerHeight": "80vh",
+      "maxWidth": 896
+    }
+  },
+  "content": [
+    {
+      "component": "nav",
+      "links": [
+        {
+          "href": "https://github.com/johanneslumpe/react-native-selectablesectionlistview",
+          "text": "GitHub"
+        },
+        {
+          "href": "https://npmjs.com/package/react-native-selectablesectionlistview",
+          "text": "npm"
+        }
+      ]
+    },
+    {
+      "component": "header",
+      "heading": "react-native-selectablesectionlistview",
+      "subhead": "A Listview with a sidebar to jump to sections directly",
+      "children": [
+        {
+          "component": "ui/TweetButton",
+          "text": "react-native-selectablesectionlistview: A Listview with a sidebar to jump to sections directly",
+          "url": null
+        },
+        {
+          "component": "ui/GithubButton",
+          "user": "johanneslumpe",
+          "repo": "react-native-selectablesectionlistview"
+        }
+      ],
+      "text": "v0.4.0"
+    },
+    {
+      "component": "article",
+      "metadata": {
+        "source": "github.readme"
+      },
+      "html": "\n<p>A Listview with a sidebar to directly jump to sections.</p>\n<p>Please file issues for missing features or bugs.</p>\n<p>I apologize for the bad name.</p>\n<p><img src=\"http://lum.pe/sectionlistview.gif\"></p>\n<h2>Usage</h2>\n<p>The most basic way to use this component is as follows:</p>\n<pre><span class=\"hljs-keyword\">var</span> SelectableSectionsListView = <span class=\"hljs-built_in\">require</span>(<span class=\"hljs-string\">&apos;react-native-selectablesectionlistview&apos;</span>);\n\n<span class=\"hljs-comment\">// inside your render function</span>\n&lt;SelectableSectionsListView\n  data={yourData}\n  cell={YourCellComponent}\n  cellHeight={<span class=\"hljs-number\">100</span>}\n  sectionHeaderHeight={<span class=\"hljs-number\">22.5</span>}\n/&gt;</pre><p>You can find a more complete example below</p>\n<h2>Props</h2>\n<h3>SelectableSectionsListView</h3>\n<p>All props are passed through to the underlying <code>ListView</code>, so you can specify all the available props for <code>ListView</code> normally - except the following, which are defined internally and will be overwritten:</p>\n<ul>\n<li><code>onScroll</code></li>\n<li><code>onScrollAnimationEnd</code></li>\n<li><code>dataSource</code></li>\n<li><code>renderRow</code></li>\n<li><code>renderSectionHeader</code></li>\n</ul>\n<h4>data</h4>\n<p><code>array|object</code>, <strong>required</strong><br>The data to render in the listview</p>\n<h4>hideSectionList</h4>\n<p><code>boolean</code><br>Whether to show the section listing or not. <em>Note: If the data your are providing to\nthe component is an array, the section list will automatically be hidden.</em></p>\n<h4>getSectionTitle</h4>\n<p><code>function</code><br>Function to provide titles for the section headers</p>\n<h4>getSectionListTitle</h4>\n<p><code>function</code><br>Function to provide titles for the section list items</p>\n<h4>onCellSelect</h4>\n<p><code>function</code><br>Callback which should be called when a cell has been selected</p>\n<h4>onScrollToSection</h4>\n<p><code>function</code><br>Callback which should be called when the user scrolls to a section</p>\n<h4>cell</h4>\n<p><code>function</code> <strong>required</strong><br>The cell component to render for each row</p>\n<h4>sectionListItem</h4>\n<p><code>function</code><br>A custom component to render for each section list item</p>\n<h4>sectionHeader</h4>\n<p><code>function</code><br>A custom component to render for each section header</p>\n<h4>footer</h4>\n<p><code>function</code><br>A custom component to render as footer<br><strong>This props takes precedence over <code>renderFooter</code></strong></p>\n<h4>renderFooter</h4>\n<p><code>function</code><br>A custom function which has to return a valid React element, which will be\nused as footer.</p>\n<h4>header</h4>\n<p><code>function</code><br>A custom component to render as header<br><strong>This props takes precedence over <code>renderHeader</code></strong></p>\n<h4>renderHeader</h4>\n<p><code>function</code><br>A custom function which has to return a valid React element, which will be used as header.</p>\n<h4>headerHeight</h4>\n<p><code>number</code><br>The height of the rendered header element.<br><strong>Is required if a header element is used, so the positions can be calculated correctly</strong></p>\n<h4>cellProps</h4>\n<p><code>object</code><br>An object containing additional props, which will be passed to each cell component</p>\n<h4>sectionHeaderHeight</h4>\n<p><code>number</code> <strong>required</strong><br>The height of the section header component</p>\n<h4>cellHeight</h4>\n<p><code>number</code> <strong>required</strong><br>The height of the cell component</p>\n<h4>useDynamicHeights</h4>\n<p><code>boolean</code><br>Whether to determine the y position to scroll to by calculating header and cell heights or by using the UIManager to measure the position of the destination element. Defaults to <code>false</code><br><strong>This is an experimental feature. For it to work properly you will most likely have to experiment with different values for <code>scrollRenderAheadDistance</code>, depending on the size of your data set.</strong></p>\n<h4>updateScrollState</h4>\n<p><code>boolean</code><br>Whether to set the current y offset as state and pass it to each cell during re-rendering</p>\n<h4>style</h4>\n<p><code>object|number</code><br>Styles to pass to the container</p>\n<h4>sectionListStyle</h4>\n<p><code>object|number</code><br>Styles to pass to the section list container</p>\n<hr>\n<h3>Cell component</h3>\n<p>These props are automatically passed to your component. In addition to these, your cell will receive all props which you specified in the object you passed as <code>cellProps</code> prop to the listview.</p>\n<h4>index</h4>\n<p><code>number</code><br>The index of the cell inside the current section</p>\n<h4>sectionId</h4>\n<p><code>string</code><br>The id of the parent section</p>\n<h4>isFirst</h4>\n<p><code>boolean</code><br>Whether the cell is the first in the section</p>\n<h4>isLast</h4>\n<p><code>boolean</code><br>Whether the cell is the last in the section</p>\n<h4>item</h4>\n<p><code>mixed</code><br>The item to render</p>\n<h4>offsetY</h4>\n<p><code>number</code><br>The current y offset of the list view<br><strong>If you do not specify <code>updateScrollState={true}</code> for the list component, this props will always be 0</strong></p>\n<h4>onSelect</h4>\n<p><code>function</code><br>The function which should be called when a cell is being selected</p>\n<hr>\n<h3>Section list item component</h3>\n<p>These props are automatically passed to your component</p>\n<h4>sectionId</h4>\n<p><code>string</code><br>The id of the parent section</p>\n<h4>title</h4>\n<p><code>string</code><br>The title for this section. Either the return value of <code>getSectionListTitle</code> or the same value as <code>sectionId</code></p>\n<h2>Example</h2>\n<pre><span class=\"hljs-class\"><span class=\"hljs-keyword\">class</span> <span class=\"hljs-title\">SectionHeader</span> <span class=\"hljs-keyword\">extends</span> <span class=\"hljs-title\">Component</span> </span>{\n  render() {\n    <span class=\"hljs-comment\">// inline styles used for brevity, use a stylesheet when possible</span>\n    <span class=\"hljs-keyword\">var</span> textStyle = {\n      <span class=\"hljs-attr\">textAlign</span>:<span class=\"hljs-string\">&apos;center&apos;</span>,\n      <span class=\"hljs-attr\">color</span>:<span class=\"hljs-string\">&apos;#fff&apos;</span>,\n      <span class=\"hljs-attr\">fontWeight</span>:<span class=\"hljs-string\">&apos;700&apos;</span>,\n      <span class=\"hljs-attr\">fontSize</span>:<span class=\"hljs-number\">16</span>\n    };\n\n    <span class=\"hljs-keyword\">var</span> viewStyle = {\n      <span class=\"hljs-attr\">backgroundColor</span>: <span class=\"hljs-string\">&apos;#ccc&apos;</span>\n    };\n    <span class=\"hljs-keyword\">return</span> (\n      <span class=\"xml\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">View</span> <span class=\"hljs-attr\">style</span>=<span class=\"hljs-string\">{viewStyle}</span>&gt;</span>\n        <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">Text</span> <span class=\"hljs-attr\">style</span>=<span class=\"hljs-string\">{textStyle}</span>&gt;</span>{this.props.title}<span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">Text</span>&gt;</span>\n      <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">View</span>&gt;</span></span>\n    );\n  }\n}\n\n<span class=\"hljs-class\"><span class=\"hljs-keyword\">class</span> <span class=\"hljs-title\">SectionItem</span> <span class=\"hljs-keyword\">extends</span> <span class=\"hljs-title\">Component</span> </span>{\n  render() {\n    <span class=\"hljs-keyword\">return</span> (\n      <span class=\"xml\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">Text</span> <span class=\"hljs-attr\">style</span>=<span class=\"hljs-string\">{{color:</span>&apos;#<span class=\"hljs-attr\">f00</span>&apos;}}&gt;</span>{this.props.title}<span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">Text</span>&gt;</span></span>\n    );\n  }\n}\n\n<span class=\"hljs-class\"><span class=\"hljs-keyword\">class</span> <span class=\"hljs-title\">Cell</span> <span class=\"hljs-keyword\">extends</span> <span class=\"hljs-title\">Component</span> </span>{\n  render() {\n    <span class=\"hljs-keyword\">return</span> (\n      <span class=\"xml\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">View</span> <span class=\"hljs-attr\">style</span>=<span class=\"hljs-string\">{{height:30}}</span>&gt;</span>\n        <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">Text</span>&gt;</span>{this.props.item}<span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">Text</span>&gt;</span>\n      <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">View</span>&gt;</span></span>\n    );\n  }\n}\n\n<span class=\"hljs-class\"><span class=\"hljs-keyword\">class</span> <span class=\"hljs-title\">MyComponent</span> <span class=\"hljs-keyword\">extends</span> <span class=\"hljs-title\">Component</span> </span>{\n\n  <span class=\"hljs-keyword\">constructor</span>(props, context) {\n    <span class=\"hljs-keyword\">super</span>(props, context);\n\n    <span class=\"hljs-keyword\">this</span>.state = {\n      <span class=\"hljs-attr\">data</span>: {\n        <span class=\"hljs-attr\">A</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">B</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">C</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">D</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">E</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">F</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">G</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">H</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">I</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">J</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">K</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">L</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">M</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">N</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">O</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">P</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">Q</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">R</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">S</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">T</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">U</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">V</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">X</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">Y</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n        <span class=\"hljs-attr\">Z</span>: [<span class=\"hljs-string\">&apos;some&apos;</span>,<span class=\"hljs-string\">&apos;entries&apos;</span>,<span class=\"hljs-string\">&apos;are here&apos;</span>],\n      }\n    };\n  }\n\n  render() {\n    <span class=\"hljs-keyword\">return</span> (\n      <span class=\"xml\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">SelectableSectionsListView</span>\n        <span class=\"hljs-attr\">data</span>=<span class=\"hljs-string\">{this.state.data}</span>\n        <span class=\"hljs-attr\">cell</span>=<span class=\"hljs-string\">{Cell}</span>\n        <span class=\"hljs-attr\">cellHeight</span>=<span class=\"hljs-string\">{30}</span>\n        <span class=\"hljs-attr\">sectionListItem</span>=<span class=\"hljs-string\">{SectionItem}</span>\n        <span class=\"hljs-attr\">sectionHeader</span>=<span class=\"hljs-string\">{SectionHeader}</span>\n        <span class=\"hljs-attr\">sectionHeaderHeight</span>=<span class=\"hljs-string\">{22.5}</span>\n      /&gt;</span>\n    );\n  }\n}</span></pre>"
+    },
+    {
+      "component": "footer",
+      "links": [
+        {
+          "href": "https://github.com/johanneslumpe/react-native-selectablesectionlistview",
+          "text": "GitHub"
+        },
+        {
+          "href": "https://github.com/johanneslumpe",
+          "text": "johanneslumpe"
+        }
+      ]
+    }
+  ]
+}
